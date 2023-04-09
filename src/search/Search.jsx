@@ -1,14 +1,17 @@
 import { useState } from "react";
 import { BsFillImageFill } from "react-icons/bs";
 import { IoSend } from "react-icons/io5";
+import { useSelector } from "react-redux";
 
 export default function Search({ createTweet }) {
+  const username = useSelector((state) => state.auth.username);
+
   const [text, setText] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
     createTweet({
       text,
-      username: "jiyoon3421",
+      username: username,
       name: "jiyoon",
       url: "https://picsum.photos/200/200",
     });

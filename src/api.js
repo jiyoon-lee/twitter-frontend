@@ -23,21 +23,10 @@ export const updateTweet = ({ tweetId, text }) => {
   });
 };
 
-export const signin = async (config) => {
-  try {
-    const response = await axios.post("/auth/login", config);
-    localStorage("auth", response.data.token);
-  } catch (e) {
-    console.log(e);
-  }
+export const login = async (config) => {
+  return axios.post("/auth/login", config);
 };
 
 export const signup = (config) => {
-  try {
-    return axios.post("/auth/signup", config).then((res) => {
-      console.log(res);
-    });
-  } catch (e) {
-    console.log(e);
-  }
+  return axios.post("/auth/signup", config);
 };

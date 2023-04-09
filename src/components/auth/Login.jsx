@@ -1,15 +1,26 @@
 import { useState } from "react";
-import { signup, signin } from "../../api";
+
+import {
+  rdSetIsSignin,
+  rdSetUsername,
+  rdSetToken,
+} from "features/auth/authSlice";
+import { useDispatch } from "react-redux";
+import { signup, login } from "../../api";
 import Input from "./Input";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [url, setUrl] = useState("");
   const [isSignUp, setIsSignUp] = useState(false);
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     let config = { username, password };
     if (isSignUp) {
@@ -20,7 +31,18 @@ export default function Login() {
         url,
       };
     }
-    isSignUp ? signup(config) : signin(config);
+    try {
+      // 토큰과 username을 redux에 저장한다.
+      // 'All Tweets'페이지로 이동한다.
+      const { data } = isSignUp ? await signup(config) : await login(config);
+      dispatch(rdSetIsSignin(true));
+      dispatch(rdSetUsername(data.username));
+      dispatch(rdSetToken(data.token));
+    } catch (e) {
+      // 실패 알림을 표시한다.
+      console.log(e);
+    }
+    navigate("/");
   };
   return (
     <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
@@ -68,7 +90,7 @@ export default function Login() {
           />
         </>
       )}
-      <div class="flex items-center">
+      <div className="flex items-center">
         <input
           id="link-checkbox"
           type="checkbox"
@@ -76,11 +98,11 @@ export default function Login() {
           onChange={() => {
             setIsSignUp((prev) => !prev);
           }}
-          class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+          className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
         />
         <label
-          for="link-checkbox"
-          class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+          htmlFor="link-checkbox"
+          className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
         >
           Create a new account?
         </label>
