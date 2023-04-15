@@ -1,24 +1,25 @@
 import { useState } from "react";
 import { BsFillImageFill } from "react-icons/bs";
 import { IoSend } from "react-icons/io5";
-import { useSelector } from "react-redux";
 
-export default function Search({ createTweet }) {
-  const username = useSelector((state) => state.auth.username);
+import { tweetApi } from "app/tweet";
 
+export default function Search() {
   const [text, setText] = useState("");
+  const [createTweet, { isLoading }] = tweetApi.useCreateTweetMutation();
   const handleSubmit = (e) => {
     e.preventDefault();
     createTweet({
-      text,
-      username: username,
+      username: "jiyoon",
       name: "jiyoon",
-      url: "https://picsum.photos/200/200",
+      text: "jiyoon",
     });
     setText("");
   };
+
   return (
     <form onSubmit={handleSubmit}>
+      {isLoading}
       <label htmlFor="chat" className="sr-only">
         Your message
       </label>

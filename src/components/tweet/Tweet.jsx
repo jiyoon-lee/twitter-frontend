@@ -2,7 +2,7 @@ import { GrClose } from "react-icons/gr";
 import { AiOutlineEdit } from "react-icons/ai";
 import { useState } from "react";
 
-export default function TweetCard({
+export default function Tweet({
   tweet: { id, createdAt, name, text, username, url },
   handleDeleteTweet,
   handleUpdateTweet,

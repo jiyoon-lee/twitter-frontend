@@ -6,7 +6,7 @@ import { RouterProvider } from "react-router-dom";
 import { Provider } from "react-redux";
 import socket from "socket.io-client";
 
-import { store } from "./redux/store";
+import { store } from "store";
 import "./index.css";
 
 const baseURL = "http://localhost:8080";
