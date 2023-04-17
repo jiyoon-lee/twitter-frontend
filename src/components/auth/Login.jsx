@@ -1,8 +1,11 @@
 import { useState } from "react";
 import Input from "./Input";
+import { authApi } from "app/auth";
 
 export default function Login() {
   const [isSignUp, setIsSignUp] = useState(false);
+  const [login, aa] = authApi.useLoginMutation();
+  const [signup, bb] = authApi.useSignupMutation();
 
   const [form, setForm] = useState({
     username: "",
@@ -11,6 +14,7 @@ export default function Login() {
     email: "",
     url: "",
   });
+  // console.log(aa, bb);
 
   const changeForm = (e) => {
     setForm({
@@ -18,8 +22,32 @@ export default function Login() {
       [e.target.id]: e.target.value,
     });
   };
+  const handleSubmit = async () => {
+    console.log("handleSubmit");
+    if (isSignUp) {
+      // 회원가입
+      const cc = await signup({
+        username: form.username,
+        password: form.password,
+        name: form.name,
+        email: form.email,
+        url: form.url,
+      });
+      console.log("cc", cc);
+    } else {
+      // 로그인
+      const dd = login({
+        username: form.username,
+        password: form.password,
+      });
+      console.log("dd", dd);
+    }
+  };
   return (
-    <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <form
+      onSubmit={handleSubmit}
+      className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+    >
       {/* username */}
       <Input
         type="text"
@@ -85,7 +113,7 @@ export default function Login() {
         <button
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           type="button"
-          onClick={() => {}}
+          onClick={handleSubmit}
         >
           {isSignUp ? "Sign Up" : "Sign In"}
         </button>
