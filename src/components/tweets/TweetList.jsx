@@ -1,25 +1,33 @@
 import Tweet from "components/tweet/Tweet";
-import { tweetApi } from "app/tweet";
+import { useGetTweetsQuery } from "features/tweet/tweetSlice";
 
 export default function TweetList() {
-  const { data, isLoading } = tweetApi.useGetTweetsQuery();
-  return (
-    <main className=" overflow-auto py-5">
-      {isLoading ? (
-        <div>Loading...</div>
-      ) : (
-        <ul>
-          {data &&
-            data.map((tweet) => (
-              <Tweet
-                tweet={tweet}
-                key={tweet.id}
-                handleDeleteTweet=""
-                handleUpdateTweet=""
-              />
-            ))}
-        </ul>
-      )}
-    </main>
-  );
+  const {
+    data: tweets,
+    isLoading,
+    isSuccess,
+    isError,
+    error,
+  } = useGetTweetsQuery();
+
+  let content;
+  if (isLoading) {
+    content = <p>Loading...</p>;
+  } else if (isSuccess) {
+    content = (
+      <main className=" overflow-auto py-5">
+        {isLoading ? (
+          <div>Loading...</div>
+        ) : (
+          <ul>
+            {tweets &&
+              tweets.map((tweet) => <Tweet tweet={tweet} key={tweet.id} />)}
+          </ul>
+        )}
+      </main>
+    );
+  } else if (isError) {
+    content = <p>{JSON.stringify(error)}</p>;
+  }
+  return content;
 }
