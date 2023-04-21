@@ -61,7 +61,7 @@ export default function Login() {
         username: form.username,
         password: form.password,
       });
-      // dispatch(setCredentials({ ...userData }));
+      dispatch(setCredentials({ ...userData }));
       setForm({
         username: "",
         password: "",

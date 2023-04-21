@@ -18,7 +18,7 @@ export default function Search() {
     createTweet({
       username,
       name,
-      text: "jiyoon",
+      text,
     });
     setText("");
   };

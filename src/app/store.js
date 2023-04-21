@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "@reduxjs/toolkit";
-import { persistReducer } from "redux-persist";
+import { persistReducer, PERSIST } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
 import authReducer from "features/auth/authSlice";
@@ -22,7 +22,11 @@ const persistedReducer = persistReducer(persistConfig, reducers);
 const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(apiSlice.middleware),
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [PERSIST],
+      },
+    }).concat(apiSlice.middleware),
   devTools: true,
 });
 
