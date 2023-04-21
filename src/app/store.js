@@ -1,27 +1,29 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import { persistReducer } from "reduxjs-toolkit-persist";
-import { apiSlice } from "app/api/apiSlice";
+import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers } from "@reduxjs/toolkit";
+import { persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+
 import authReducer from "features/auth/authSlice";
-
-import storage from "reduxjs-toolkit-persist/lib/storage";
-import autoMergeLevel1 from "reduxjs-toolkit-persist/lib/stateReconciler/autoMergeLevel1";
-
-const persistConfig = {
-  key: "root",
-  storage: storage,
-  stateReconciler: autoMergeLevel1,
-};
+import { apiSlice } from "app/api/apiSlice";
 
 const reducers = combineReducers({
   [apiSlice.reducerPath]: apiSlice.reducer,
   auth: authReducer,
 });
 
-const _persistedReducer = persistReducer(persistConfig, reducers);
+const persistConfig = {
+  key: "root",
+  storage,
+  whitelist: ["auth"],
+};
 
-export const store = configureStore({
-  reducer: _persistedReducer,
+const persistedReducer = persistReducer(persistConfig, reducers);
+
+const store = configureStore({
+  reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(apiSlice.middleware),
   devTools: true,
 });
+
+export default store;

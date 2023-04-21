@@ -2,18 +2,22 @@ import { useState } from "react";
 import { BsFillImageFill } from "react-icons/bs";
 import { IoSend } from "react-icons/io5";
 import { useSelector } from "react-redux";
-import { selectCurrentUsername } from "features/auth/authSlice";
+import {
+  selectCurrentName,
+  selectCurrentUsername,
+} from "features/auth/authSlice";
 import { useCreateTweetMutation } from "features/tweet/tweetSlice";
 
 export default function Search() {
   const username = useSelector(selectCurrentUsername);
+  const name = useSelector(selectCurrentName);
   const [text, setText] = useState("");
   const [createTweet, { isLoading }] = useCreateTweetMutation();
   const handleSubmit = (e) => {
     e.preventDefault();
     createTweet({
       username,
-      name: "jiyoon",
+      name,
       text: "jiyoon",
     });
     setText("");
