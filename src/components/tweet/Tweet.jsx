@@ -2,13 +2,15 @@ import { GrClose } from "react-icons/gr";
 import { AiOutlineEdit } from "react-icons/ai";
 import { useState } from "react";
 
+import { useDeleteTweetMutation } from "features/tweet/tweetSlice";
+
 export default function Tweet({
   tweet: { id, createdAt, name, text, username, url },
-  handleDeleteTweet,
-  handleUpdateTweet,
 }) {
   const [isEdit, setIsEdit] = useState(false);
   const [newText, setNewText] = useState(text);
+  const [deleteTweet, { isLoading }] = useDeleteTweetMutation();
+
   return (
     <li className="flex p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
       <section>
@@ -19,10 +21,6 @@ export default function Tweet({
           className="grow"
           onSubmit={(e) => {
             e.preventDefault();
-            handleUpdateTweet({
-              tweetId: id,
-              text: newText,
-            });
             setIsEdit(false);
           }}
         >
@@ -81,13 +79,15 @@ export default function Tweet({
         </section>
       )}
       <section className="flex flex-col">
-        <button
-          onClick={() => {
-            handleDeleteTweet(id);
-          }}
-        >
-          <GrClose />
-        </button>
+        {isLoading || (
+          <button
+            onClick={() => {
+              deleteTweet(id);
+            }}
+          >
+            <GrClose />
+          </button>
+        )}
         <button
           onClick={() => {
             setIsEdit((prev) => !prev);

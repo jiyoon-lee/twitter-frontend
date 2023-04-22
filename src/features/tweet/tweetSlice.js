@@ -13,7 +13,17 @@ export const tweetApiSlice = apiSlice.injectEndpoints({
         body,
       }),
     }),
+    deleteTweet: builder.mutation({
+      query: (id) => ({
+        url: `/tweets/${id}`,
+        method: "delete",
+      }),
+    }),
   }),
 });
 
-export const { useGetTweetsQuery, useCreateTweetMutation } = tweetApiSlice;
+export const {
+  useGetTweetsQuery,
+  useCreateTweetMutation,
+  useDeleteTweetMutation,
+} = tweetApiSlice;
