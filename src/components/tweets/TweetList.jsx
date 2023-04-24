@@ -5,6 +5,7 @@ export default function TweetList() {
   const {
     data: tweets,
     isLoading,
+    isFetching,
     isSuccess,
     isError,
     error,
@@ -16,7 +17,7 @@ export default function TweetList() {
   } else if (isSuccess) {
     content = (
       <main className=" overflow-auto py-5">
-        {isLoading ? (
+        {isFetching ? (
           <div>Loading...</div>
         ) : (
           <ul>

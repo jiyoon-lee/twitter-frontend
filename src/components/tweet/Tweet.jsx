@@ -2,14 +2,17 @@ import { GrClose } from "react-icons/gr";
 import { AiOutlineEdit } from "react-icons/ai";
 import { useState } from "react";
 
-import { useDeleteTweetMutation } from "features/tweet/tweetSlice";
+import {
+  useDeleteTweetMutation,
+  useUpdateTweetMutation,
+} from "features/tweet/tweetSlice";
 
-export default function Tweet({
-  tweet: { id, createdAt, name, text, username, url },
-}) {
+export default function Tweet({ tweet }) {
+  const { id, createdAt, name, text, username, url } = tweet;
   const [isEdit, setIsEdit] = useState(false);
   const [newText, setNewText] = useState(text);
   const [deleteTweet, { isLoading }] = useDeleteTweetMutation();
+  const [updateTweet] = useUpdateTweetMutation();
 
   return (
     <li className="flex p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
@@ -21,6 +24,7 @@ export default function Tweet({
           className="grow"
           onSubmit={(e) => {
             e.preventDefault();
+            updateTweet({ ...tweet, text: newText });
             setIsEdit(false);
           }}
         >
@@ -40,12 +44,7 @@ export default function Tweet({
                 viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                ></path>
+                <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
               </svg>
             </div>
             <input
