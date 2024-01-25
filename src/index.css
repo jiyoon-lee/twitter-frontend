@@ -19,7 +19,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  @apply bg-layered-waves-haikei bg-cover bg-no-repeat bg-fixed;
+  @apply bg-background-image bg-cover bg-no-repeat bg-fixed;
 }
 #root {
   @apply flex justify-center items-center h-screen w-full;

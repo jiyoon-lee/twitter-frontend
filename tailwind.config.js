@@ -4,8 +4,11 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: {
-        "layered-waves-haikei": "url('assets/layered-waves-haikei.svg')",
+        "background-image": "url('assets/background-image.jpg')",
       },
+    },
+    colors: {
+      header: "#FFA1A7",
     },
   },
   plugins: [],

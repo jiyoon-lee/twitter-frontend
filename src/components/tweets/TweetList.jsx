@@ -16,7 +16,7 @@ export default function TweetList() {
     content = <p>Loading...</p>;
   } else if (isSuccess) {
     content = (
-      <main className=" overflow-auto py-5">
+      <main className="overflow-auto">
         {isFetching ? (
           <div>Loading...</div>
         ) : (
