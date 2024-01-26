@@ -11,15 +11,18 @@ export type LoginFormInput = {
 
 export default function Login() {
   const methods = useForm<LoginFormInput>();
-  const { isDirty } = methods.formState;
-  console.log(isDirty);
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(() => console.log("몰라"))}>
+      <form
+        className="bg-white shadow-md rounded px-8 pt-6 pb-8"
+        onSubmit={methods.handleSubmit(() => console.log("몰라"))}
+      >
         <Input type="username" label="UserName" errorMsg="필수 입력값입니다." />
-        <Input type="username" label="UserName" errorMsg="필수 입력값입니다." />
-        <Input type="username" label="UserName" errorMsg="필수 입력값입니다." />
+        <Input type="password" label="Password" errorMsg="필수 입력값입니다." />
+        <Input type="name" label="Name" errorMsg="필수 입력값입니다." />
+        <Input type="email" label="Email" errorMsg="필수 입력값입니다." />
+        <Input type="url" label="Url" errorMsg="필수 입력값입니다." />
         <input type="submit" />
       </form>
     </FormProvider>

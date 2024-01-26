@@ -7,9 +7,6 @@ module.exports = {
         "background-image": "url('assets/background-image.jpg')",
       },
     },
-    colors: {
-      header: "#FFA1A7",
-    },
   },
   plugins: [],
 };

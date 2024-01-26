@@ -5,5 +5,5 @@ interface PropsType {
 }
 
 export default function ErrorMessage({ message }: PropsType) {
-  return <p role="alert">{message}</p>;
+  return <p className="text-red-500 text-xs italic">{message}</p>;
 }

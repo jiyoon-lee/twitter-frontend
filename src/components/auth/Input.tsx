@@ -1,5 +1,6 @@
-import { useFormContext } from "react-hook-form";
+import { FieldError, FieldErrors, useFormContext } from "react-hook-form";
 import { LoginFormInput } from "./Login";
+import ErrorMessage from "./ErrorMessage";
 
 interface PropsType {
   readonly type: keyof LoginFormInput;
@@ -21,12 +22,13 @@ export default function Input({ type, label, errorMsg }: PropsType) {
         {label}
       </label>
       <input
-        {...register(type, { required: true })}
+        {...register(type, { required: errorMsg })}
         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        aria-invalid={errors[type] ? "true" : "false"}
         id={type}
         type="text"
       />
-      {errors && <p>{errorMsg}</p>}
+      {errors && <ErrorMessage message={errors[type]?.message} />}
     </div>
   );
 }
